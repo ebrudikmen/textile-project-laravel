@@ -1,6 +1,6 @@
-<?php /** @noinspection PhpUndefinedClassInspection */
+<?php
 
-/** @noinspection PhpUnused */
+
 
 namespace App\Http\Controllers\Auth;
 
@@ -33,7 +33,7 @@ class SignUpController extends Controller
 
         $attributes['password']=Hash::make($attributes['password']);
 
-        /** @noinspection PhpUndefinedMethodInspection */
+
         $user = User::create($attributes);
 
         event(new SignedUp($user));

@@ -2,29 +2,30 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\Product;
 
 /**
- * Class ProductResource
+ * Class CustomerResource
  * @package App\Http\Resources
- * @mixin Product
+ * @mixin Customer
  */
-class ProductResource extends JsonResource
+class CustomerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return array
      */
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'price' => $this->price,
+            'name'=>$this->name,
+            'surname'=>$this->surname,
+            'email'=>$this->email,
+            'phone'=>$this->phone,
         ];
     }
 }

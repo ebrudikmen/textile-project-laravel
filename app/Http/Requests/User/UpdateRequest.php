@@ -1,13 +1,12 @@
-<?php /** @noinspection PhpUndefinedClassInspection */
+<?php
 /** @noinspection PhpUnused */
-
-/** @noinspection PhpUnusedAliasInspection */
 
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 use Gate;
+
 class UpdateRequest extends FormRequest
 {
     /**
@@ -28,9 +27,9 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|string|max:255',
-            'email'=>'required|string|Max:255',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|Max:255',
             'email_verified_at' => 'nullable|date',
-            ];
+        ];
     }
 }

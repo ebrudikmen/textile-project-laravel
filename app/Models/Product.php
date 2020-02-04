@@ -1,15 +1,11 @@
-<?php /** @noinspection PhpMissingFieldTypeInspection */
-/** @noinspection SpellCheckingInspection */
-/** @noinspection PhpUndefinedClassInspection */
-
-/** @noinspection PhpUnused */
+<?php
 
 namespace App\Models;
 
-use Eloquent;
-
-
 use Carbon\Carbon;
+use Eloquent;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Product
@@ -17,20 +13,32 @@ use Carbon\Carbon;
  *
  * @property int id
  * @property string name
+ * @property Carbon created_at
+ * @property Carbon updated_at
  * @property float price
- * @property Carbon created_date
- * @property Carbon updated_date
  */
 class Product extends Model
 {
-    /**
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'price',
 
+    protected $fillable = [
+        'name', 'price'
     ];
 
+    /**
+     * @return BelongsToMany
+     */
+    public function supplier()
+    {
+        return $this->belongsToMany(Supplier::class, 'purchase');
 
+    }
 
+    /**
+     * @return BelongsToMany
+     */
+    public function customer()
+    {
+        return $this->belongsToMany(Customer::class, 'sale');
+
+    }
 }

@@ -1,8 +1,4 @@
-<?php /** @noinspection PhpUndefinedNamespaceInspection */
-/** @noinspection PhpUnused */
-/** @noinspection SpellCheckingInspection */
-
-/** @noinspection PhpUndefinedClassInspection */
+<?php
 
 namespace App\Models;
 

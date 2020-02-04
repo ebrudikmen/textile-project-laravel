@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Product;
+namespace App\Http\Requests\Purchase;
 
 use App\Rules\PriceRule;
-use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrUpdateRequest extends FormRequest
@@ -26,8 +25,13 @@ class StoreOrUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'price' => ['required', new PriceRule],
+            'supplier_id' => 'required|int|exists:suppliers,id',
+            'product_id' => 'required|int|exists:products,id',
+            'quantity' => 'nullable|int',
+            'purchased_price' => ['required', new PriceRule],
+            'cancel' => 'required|boolean',
+            'order_date' => 'required|date',
+            'payment_date' => 'required|date',
         ];
     }
 }

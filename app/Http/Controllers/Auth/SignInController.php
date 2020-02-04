@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SignIn\SignInRequest;
 use App\Http\Resources\Auth\TokenResource;
-use Dotenv\Exception\ValidationException;
-
+use Illuminate\Validation\ValidationException;
+use Gate;
 class SignInController extends Controller
 {
     /**
@@ -20,6 +20,7 @@ class SignInController extends Controller
     /**
      * @param SignInRequest $request
      * @return TokenResource
+     * @throws ValidationException
      */
     public function signIn(SignInRequest $request)
     {
@@ -28,12 +29,30 @@ class SignInController extends Controller
         return new TokenResource($token);
     }
 
+//    /**
+//     * Sign In as Admin.
+//     *
+//     * @param SignInRequest $request
+//     * @return TokenResource
+//     * @throws ValidationException
+//     */
+//    public function signInAsAdmin(SignInRequest $request)
+//    {
+//        $token = $this->attempt($request);
+//        if (Gate::denies('admin')) {
+//            throw ValidationException::withMessages([
+//                'email' => trans('auth.unauthorized'),
+//            ]);
+//        }
+//
+//        return new TokenResource($token);
+//    }
     /**
      * @return TokenResource
      */
     public function refresh()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+
         $token = auth()->refresh();
         return new TokenResource($token);
     }
@@ -41,16 +60,15 @@ class SignInController extends Controller
 
     /**
      * @param SignInRequest $request
-     * @return bool
+     * @return bool|string
      * @throws ValidationException
      */
-    protected function attempt(SignInRequest $request){
-        $attributes = $request ->validated();
-        if (! $token = auth()->attempt($attributes)){
-            /** @noinspection PhpUndefinedMethodInspection */
-            /** @noinspection PhpUndefinedClassInspection */
+    protected function attempt(SignInRequest $request)
+    {
+        $attributes = $request->validated();
+        if (!$token = auth()->guard('api')->attempt($attributes)) {
             throw ValidationException::withMessages([
-                'email'=> trans('auth.failed'),
+                'email' => trans('auth.failed'),
             ]);
         }
         return $token;

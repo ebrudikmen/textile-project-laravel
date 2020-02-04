@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Http\Requests\Product;
+namespace App\Http\Requests\Supplier;
 
-use App\Rules\PriceRule;
-use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrUpdateRequest extends FormRequest
@@ -27,7 +25,9 @@ class StoreOrUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'price' => ['required', new PriceRule],
+            'surname' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
         ];
     }
 }

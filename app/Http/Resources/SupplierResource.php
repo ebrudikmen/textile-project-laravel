@@ -2,16 +2,16 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\Product;
 
 /**
- * Class ProductResource
+ * Class SupplierResource
  * @package App\Http\Resources
- * @mixin Product
+ * @mixin Supplier
  */
-class ProductResource extends JsonResource
+class SupplierResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,7 +24,10 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'price' => $this->price,
+            'surname' => $this->surname,
+            'email' => $this->email,
+            'phone' => $this->phone,
+
         ];
     }
 }

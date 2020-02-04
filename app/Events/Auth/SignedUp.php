@@ -1,6 +1,6 @@
 <?php /** @noinspection PhpUnused */
 
-/** @noinspection PhpUndefinedClassInspection */
+
 
 namespace App\Events\Auth;
 

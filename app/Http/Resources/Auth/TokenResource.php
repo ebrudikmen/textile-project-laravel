@@ -1,6 +1,6 @@
 <?php /** @noinspection PhpUnused */
 
-/** @noinspection PhpUndefinedClassInspection */
+
 
 namespace App\Http\Resources\Auth;
 
