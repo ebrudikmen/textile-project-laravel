@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Customer\StoreOrUpdateRequest;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
+use Cache;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Exception;
@@ -27,6 +28,7 @@ class CustomerController extends Controller
     {
         $attributes = $request->validated();
         $customer = Customer::create($attributes);
+        Cache::forget('customers');
         return new CustomerResource($customer);
     }
 
@@ -39,6 +41,7 @@ class CustomerController extends Controller
     {
         $attributes = $request->validated();
         $customer->update($attributes);
+        Cache::forget('customers');
         return new CustomerResource($customer);
     }
 
@@ -57,13 +60,27 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Customer::query();
-        if ($name = $request->get('name')) {
-            $query->where('name', 'ILIKE', "%{$name}%");
-        }
-        $customers = $query->paginate();
-        return CustomerResource::collection($customers);
+//        if (Cache::has('customers')) {
+//            $customers = Cache::get('customers');
+//        } else {
+//            $customers = Customer::where('name', 'ILIKE', '%a%')
+//                ->where('surname', 'ILIKE', '%b%')
+//                ->paginate();
+//
+//            Cache::put('customers', $customers, 1 * 60 * 60);
+//        }
 
+        $customers = Cache::remember('customers', 1 * 60 * 60, function () {
+            return Customer::where('name', 'ILIKE', '%a%')
+                ->where('surname', 'ILIKE', '%b%')
+                ->paginate();
+        });
+
+//        $customer = Customer::where('name', 'ILIKE', '%a%')
+//            ->where('surname', 'ILIKE', '%b%')
+//            ->paginate();
+//
+       return $customers;
     }
 
     /**

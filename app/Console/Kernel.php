@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\Customer;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,6 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        factory(Customer::class)->times(10000)->create();
+
         // $schedule->command('inspire')
         //          ->hourly();
     }

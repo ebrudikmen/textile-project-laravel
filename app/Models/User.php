@@ -31,6 +31,7 @@ class User extends Authenticatable implements JWTSubject
         'name', 'email', 'email_verified_at', 'password',
     ];
 
+
     /**
      * @var array
      */
